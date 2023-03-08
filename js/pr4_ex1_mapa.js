@@ -18,7 +18,6 @@ navigator.geolocation.getCurrentPosition((pos) => {
 
 function actualitzarPosicio(){
     map.setView([latitudActual, longitudActual]);
-    console.log(latitudActual + " - " + longitudActual);
 }
 
 function marcarMapa(){
@@ -31,7 +30,12 @@ function marcarMapa(){
 }
 
 function ubicacioActual(){
-    ubiActual = L.marker([latitudActual, longitudActual]).addTo(map);
+    ubiActual = L.circle([latitudActual, longitudActual], {
+        color: 'blue',
+        fillColor: 'blue',
+        fillOpacity: 1,
+        radius: 10
+    }).addTo(map);
 }
 
 function borrarUbicacioAntiga(){
@@ -79,10 +83,10 @@ if(navigator.geolocation){
             longitudActual = position.coords.longitude;
             actualitzarPosicio();
             comprobarUbicacio();
+            ubicacioActual();
             if(estat){
                 marcarMapa();
             }
-            ubicacioActual();
         })
     }, 500);
 } else {
