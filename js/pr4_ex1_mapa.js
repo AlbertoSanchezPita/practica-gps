@@ -69,10 +69,12 @@ function comprobarUbicacio(){
 
 function iniciar(){
     estat = true;
+    document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està ACTIVADA";
 }
 
 function acabar(){
     estat = false;
+    document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està PARADA";
 }
 
 
