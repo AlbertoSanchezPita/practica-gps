@@ -39,11 +39,19 @@ function marcarMapa(){
 }
 
 function ubicacioActual(){
-    L.marker([latitudActual, longitudActual]).addTo(map);
+    L.circle([latitudActual, longitudActual], {
+        color: 'blue',
+        fillOpacity: .5,
+        radius: 10
+    }).addTo(map);
 }
 
 function borrarUbicacioAntiga(){
-    L.circle([latitudAntiga, longitudAntiga]).remove();
+    L.circle([latitudAntiga, longitudAntiga], {
+        color: 'blue',
+        fillOpacity: .5,
+        radius: 10
+    }).remove();
 }
 
 function guardarUbicacio(){
@@ -89,7 +97,7 @@ if(navigator.geolocation){
             if(estat){
                 marcarMapa();
             }
-            ubicacioActual();
+            // ubicacioActual();
         })
     }, 3000);
 } else {
