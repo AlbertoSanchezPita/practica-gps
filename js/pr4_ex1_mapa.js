@@ -31,10 +31,10 @@ function actualitzarPosicio(){
 }
 
 function marcarMapa(){
-    L.polyline([latitudAntiga, longitudAntiga], {
+    L.circle([latitudAntiga, longitudAntiga], {
         color: 'red',
-        smoothFactor: 1.0,
-        noClip: false
+        fillOpacity: .5,
+        radius: 10
     }).addTo(map);
 }
 
@@ -99,7 +99,7 @@ if(navigator.geolocation){
             }
             // ubicacioActual();
         })
-    }, 1000);
+    }, 000);
 } else {
     alert("El teu navegador no té suport per a la geolocalització");
 }
