@@ -49,8 +49,8 @@ function ubicacioActual(){
 function borrarUbicacioAntiga(){
     L.circle([latitudAntiga, longitudAntiga], {
         color: 'blue',
-        fillOpacity: .5,
-        radius: 10
+        fillOpacity: 1,
+        radius: 5
     }).remove();
 }
 
