@@ -39,19 +39,11 @@ function marcarMapa(){
 }
 
 function ubicacioActual(){
-    L.marker([latitudActual, longitudActual], {
-        color: 'blue',
-        fillOpacity: .5,
-        radius: 10
-    }).addTo(map);
+    L.marker([latitudActual, longitudActual]).addTo(map);
 }
 
 function borrarUbicacioAntiga(){
-    L.circle([latitudAntiga, longitudAntiga], {
-        color: 'blue',
-        fillOpacity: .5,
-        radius: 10
-    }).remove()
+    L.circle([latitudAntiga, longitudAntiga]).remove();
 }
 
 function guardarUbicacio(){
