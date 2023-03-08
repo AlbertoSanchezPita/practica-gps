@@ -3,6 +3,7 @@ var longitudActual;
 var latitudAntiga;
 var longitudAntiga;
 var estat = false;
+var ubicacion;
 
 document.getElementsByClassName("iniciar")[0].addEventListener("click", iniciar);
 document.getElementsByClassName("acabar")[0].addEventListener("click", acabar);
@@ -10,47 +11,48 @@ document.getElementsByClassName("acabar")[0].addEventListener("click", acabar);
 navigator.geolocation.getCurrentPosition((pos) => {
     latitudActual = pos.coords.latitude;
     longitudActual = pos.coords.longitude;
+    ubicacion = L.circle([latitudActual, longitudActual], {
+        color: 'blue',
+        fillColor: 'blue',
+        fillOpacity: 1,
+        radius: 10
+    }).addTo(map);
 });
 
-function obtenirPosicio(){
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(position => {
-            this.latitud = position.coords.latitude;
-            this.longitud  = position.coords.longitude;
-            console.log(position.coords.latitude);
-            console.log(position.coords.longitude);
-        });
-    } else {
-        console.log("El navegador no es compatible amb la geolocalitzacio");
-    }
-}
+
 
 function actualitzarPosicio(){
     map.setView([latitudActual, longitudActual]);
-    console.log(latitudActual + " - " + longitudActual);
+    ubicacion.setLatLng([latitudActual, longitudActual]);
 }
 
 function marcarMapa(){
     L.circle([latitudAntiga, longitudAntiga], {
         color: 'red',
-        fillOpacity: .5,
+        fillColor: 'red',
+        fillOpacity: 1,
         radius: 10
     }).addTo(map);
 }
 
 function ubicacioActual(){
-    L.circle([latitudActual, longitudActual], {
-        color: 'blue',
-        fillOpacity: .5,
-        radius: 10
-    }).addTo(map);
+    // ubicacion = L.circle([latitudActual, longitudActual], {
+    //     color: 'blue',
+    //     fillColor: 'blue',
+    //     fillOpacity: 1,
+    //     radius: 10
+    // }).addTo(map);
+
+    ubicacion.setLatLng([latitudActual, longitudActual]);
+    console.log(latitudActual);
 }
 
 function borrarUbicacioAntiga(){
     L.circle([latitudAntiga, longitudAntiga], {
         color: 'blue',
+        fillColor: 'blue',
         fillOpacity: 1,
-        radius: 5
+        radius: 10
     }).remove();
 }
 
