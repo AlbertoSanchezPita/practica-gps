@@ -81,10 +81,10 @@ if(navigator.geolocation){
             longitudActual = position.coords.longitude;
             actualitzarPosicio();
             comprobarUbicacio();
-            ubicacioActual();
             if(estat){
                 marcarMapa();
             }
+            ubicacioActual();
         })
     }, 500);
 } else {
