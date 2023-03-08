@@ -39,7 +39,7 @@ function ubicacioActual(){
 }
 
 function borrarUbicacioAntiga(){
-    ubiActual.remove();
+    ubiAntiga.remove();
 }
 
 function guardarUbicacio(){
@@ -50,9 +50,7 @@ function guardarUbicacio(){
 
 function comprobarUbicacio(){
     if(latitudActual != latitudAntiga || longitudActual != longitudAntiga){
-        if(!estat){
         borrarUbicacioAntiga();
-        }
     }
 }
 
@@ -82,7 +80,7 @@ if(navigator.geolocation){
             latitudActual = position.coords.latitude;
             longitudActual = position.coords.longitude;
             actualitzarPosicio();
-            borrarUbicacioAntiga();
+            comprobarUbicacio();
             if(estat){
                 marcarMapa();
             }
