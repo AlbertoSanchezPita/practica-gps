@@ -51,7 +51,7 @@ function borrarUbicacioAntiga(){
         color: 'blue',
         fillOpacity: .5,
         radius: 10
-    }).remove(map);
+    }).remove();
 }
 
 function guardarUbicacio(){
@@ -61,7 +61,9 @@ function guardarUbicacio(){
 
 function comprobarUbicacio(){
     if(latitudActual != latitudAntiga || longitudActual != longitudAntiga){
+        if(!estat){
         borrarUbicacioAntiga();
+        }
     }
 }
 
