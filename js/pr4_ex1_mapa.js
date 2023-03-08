@@ -39,7 +39,7 @@ function marcarMapa(){
 }
 
 function ubicacioActual(){
-    L.circle([latitudActual, longitudActual], {
+    L.marker([latitudActual, longitudActual], {
         color: 'blue',
         fillOpacity: .5,
         radius: 10
@@ -51,7 +51,7 @@ function borrarUbicacioAntiga(){
         color: 'blue',
         fillOpacity: .5,
         radius: 10
-    }).remove();
+    }).remove()
 }
 
 function guardarUbicacio(){
