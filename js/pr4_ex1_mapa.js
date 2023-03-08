@@ -50,9 +50,7 @@ function guardarUbicacio(){
 
 function comprobarUbicacio(){
     if(latitudActual != latitudAntiga || longitudActual != longitudAntiga){
-        if(!estat){
         borrarUbicacioAntiga();
-        }
     }
 }
 
