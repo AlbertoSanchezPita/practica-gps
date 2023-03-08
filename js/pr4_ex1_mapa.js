@@ -31,12 +31,7 @@ function marcarMapa(){
 }
 
 function ubicacioActual(){
-    ubiActual = L.circle([latitudActual, longitudActual], {
-        color: 'blue',
-        fillColor: 'blue',
-        fillOpacity: 1,
-        radius: 10
-    }).addTo(map);
+    ubiActual = L.marker([latitudActual, longitudActual]).addTo(map);
 }
 
 function borrarUbicacioAntiga(){
