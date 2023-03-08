@@ -2,8 +2,9 @@ var latitudActual;
 var longitudActual;
 var latitudAntiga;
 var longitudAntiga;
+var ubiActual;
+var ubiAntiga;
 var estat = false;
-var ubicacion;
 
 document.getElementsByClassName("iniciar")[0].addEventListener("click", iniciar);
 document.getElementsByClassName("acabar")[0].addEventListener("click", acabar);
@@ -11,19 +12,13 @@ document.getElementsByClassName("acabar")[0].addEventListener("click", acabar);
 navigator.geolocation.getCurrentPosition((pos) => {
     latitudActual = pos.coords.latitude;
     longitudActual = pos.coords.longitude;
-    ubicacion = L.circle([latitudActual, longitudActual], {
-        color: 'blue',
-        fillColor: 'blue',
-        fillOpacity: 1,
-        radius: 10
-    }).addTo(map);
 });
 
 
 
 function actualitzarPosicio(){
     map.setView([latitudActual, longitudActual]);
-    ubicacion.setLatLng([latitudActual, longitudActual]);
+    console.log(latitudActual + " - " + longitudActual);
 }
 
 function marcarMapa(){
@@ -36,29 +31,22 @@ function marcarMapa(){
 }
 
 function ubicacioActual(){
-    // ubicacion = L.circle([latitudActual, longitudActual], {
-    //     color: 'blue',
-    //     fillColor: 'blue',
-    //     fillOpacity: 1,
-    //     radius: 10
-    // }).addTo(map);
-
-    ubicacion.setLatLng([latitudActual, longitudActual]);
-    console.log(latitudActual);
-}
-
-function borrarUbicacioAntiga(){
-    L.circle([latitudAntiga, longitudAntiga], {
+    ubiActual = L.circle([latitudActual, longitudActual], {
         color: 'blue',
         fillColor: 'blue',
         fillOpacity: 1,
         radius: 10
-    }).remove();
+    }).addTo(map);
+}
+
+function borrarUbicacioAntiga(){
+    ubiAntiga.remove();
 }
 
 function guardarUbicacio(){
     latitudAntiga = latitudActual;
     longitudAntiga = longitudActual;
+    ubiAntiga = ubiActual;
 }
 
 function comprobarUbicacio(){
@@ -99,9 +87,9 @@ if(navigator.geolocation){
             if(estat){
                 marcarMapa();
             }
-            // ubicacioActual();
+            ubicacioActual();
         })
-    }, 1000);
+    }, 500);
 } else {
     alert("El teu navegador no té suport per a la geolocalització");
 }
