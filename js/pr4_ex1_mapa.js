@@ -99,7 +99,7 @@ if(navigator.geolocation){
             }
             // ubicacioActual();
         })
-    }, 000);
+    }, 1000);
 } else {
     alert("El teu navegador no té suport per a la geolocalització");
 }
