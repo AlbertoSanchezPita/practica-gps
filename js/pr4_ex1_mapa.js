@@ -1,36 +1,47 @@
 var latitudActual;
 var longitudActual;
-var latitudAntiga;
-var longitudAntiga;
 var ubiActual;
-var ubiAntiga;
 var estat = false;
+var llistaCoordenades = [];
+var pruebas = [[41.450219, 2.184702], [41.451439, 2.186297], [41.453248, 2.186754], [41.454661, 2.187715]]
 
 document.getElementsByClassName("iniciar")[0].addEventListener("click", iniciar);
 document.getElementsByClassName("acabar")[0].addEventListener("click", acabar);
 
-navigator.geolocation.getCurrentPosition((pos) => {
-    latitudActual = pos.coords.latitude;
-    longitudActual = pos.coords.longitude;
-});
+// Creo el mapa
+var map = L.map('map').setView([0, 0], 16);
+
+// Añado la capa de la interfaz grafica
+var capa = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+// Variable para guardar las propiedades de las lineas a pintar
+var linies = {
+    color: 'red',
+    opacity: '100%'
+}
+
+// Variable que crea la ruta con las coordenadas guardadas
+var ruta = L.polyline(llistaCoordenades, linies);
+
+// Añadimos las linias al mapa
+ruta.addTo(map);
 
 
 
-function actualitzarPosicio(){
+function centrarMapa(){
     map.setView([latitudActual, longitudActual]);
 }
 
 function marcarMapa(){
-    L.circle([latitudAntiga, longitudAntiga], {
-        color: 'red',
-        fillColor: 'red',
-        fillOpacity: 1,
-        radius: 10
-    }).addTo(map);
+    llistaCoordenades.push([latitudActual, longitudActual]);
+    ruta = L.multiPolyline(llistaCoordenades, linies);
+    ruta.addTo(map);
 }
 
 function ubicacioActual(){
-    ubiActual = L.circle([latitudActual, longitudActual], {
+    ubiActual = L.circle([latitudActual, longitudActual],{
         color: 'blue',
         fillColor: 'blue',
         fillOpacity: 1,
@@ -38,25 +49,15 @@ function ubicacioActual(){
     }).addTo(map);
 }
 
-function borrarUbicacioAntiga(){
-    ubiAntiga.remove();
+function actualitzarUbicacioActual(){
+        ubiActual.setLatLng([latitudActual, longitudActual]).update();
 }
 
-function guardarUbicacio(){
-    latitudAntiga = latitudActual;
-    longitudAntiga = longitudActual;
-    ubiAntiga = ubiActual;
-}
-
-function comprobarUbicacio(){
-    if(latitudActual != latitudAntiga || longitudActual != longitudAntiga){
-        borrarUbicacioAntiga();
-    }
-}
 
 function iniciar(){
     estat = true;
     document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està ACTIVADA";
+
 }
 
 function acabar(){
@@ -64,29 +65,32 @@ function acabar(){
     document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està PARADA";
 }
 
+function recuperarDades(){
+   return localStorage.getItem("llistaRutes");
+}
 
-
-var map = L.map('map').setView([0, 0], 16);
-
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
 
 
 if(navigator.geolocation){
-    setInterval(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            guardarUbicacio();
-            latitudActual = position.coords.latitude;
-            longitudActual = position.coords.longitude;
-            actualitzarPosicio();
-            comprobarUbicacio();
+    navigator.geolocation.getCurrentPosition((position) => {
+        latitudActual = position.coords.latitude;
+        longitudActual = position.coords.longitude;
+        ubicacioActual();
+        centrarMapa();
+        setInterval(() => {
             if(estat){
+                centrarMapa();
                 marcarMapa();
-            }
-            ubicacioActual();
-        })
-    }, 500);
+                actualitzarUbicacioActual();
+                }
+        }, 1000);
+    })
 } else {
     alert("El teu navegador no té suport per a la geolocalització");
 }
+
+
+L.polyline(pruebas, {color: 'red'}).addTo(map);
+
+
+console.log(localStorage.getItem("llistaRutes"));
