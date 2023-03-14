@@ -36,7 +36,7 @@ function centrarMapa(){
 
 function marcarMapa(){
     llistaCoordenades.push([latitudActual, longitudActual]);
-    ruta = L.multiPolyline(llistaCoordenades, linies);
+    ruta = L.polyline(llistaCoordenades, linies);
     ruta.addTo(map);
 }
 
