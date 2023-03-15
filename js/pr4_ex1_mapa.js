@@ -1,14 +1,13 @@
 var latitudActual;
 var longitudActual;
 var ubiActual;
-var estat = false;
 var llistaCoordenades = [];
+var rutes;
 var pruebas = [[41.450219, 2.184702], [41.451439, 2.186297], [41.453248, 2.186754], [41.454661, 2.187715]]
 
-var contador=0;
 
-document.getElementsByClassName("iniciar")[0].addEventListener("click", iniciar);
-document.getElementsByClassName("acabar")[0].addEventListener("click", acabar);
+// document.getElementsByClassName("iniciar")[0].addEventListener("click", iniciar);
+// document.getElementsByClassName("acabar")[0].addEventListener("click", acabar);
 
 // Creo el mapa
 var map = L.map('map').setView([0, 0], 16);
@@ -56,16 +55,16 @@ function actualitzarUbicacioActual(){
 }
 
 
-function iniciar(){
-    estat = true;
-    document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està ACTIVADA";
+// function iniciar(){
+//     estat = true;
+//     document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està ACTIVADA";
 
-}
+// }
 
-function acabar(){
-    estat = false;
-    document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està PARADA";
-}
+// function acabar(){
+//     estat = false;
+//     document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està PARADA";
+// }
 
 function guardarDades(){
     let dades = {
@@ -82,8 +81,8 @@ function guardarDades(){
 
 function recuperarDades(){
     let recuperarRutes = localStorage.getItem("llistaRutes");
-    let llistaDades = JSON.parse(recuperarRutes);
-    console.log(llistaDades);
+    rutes = JSON.parse(recuperarRutes);
+    console.log(rutes);
 }
 
 
@@ -98,11 +97,8 @@ if(navigator.geolocation){
             latitudActual = position.coords.latitude;
             longitudActual = position.coords.longitude;
             centrarMapa();
-            if(estat){
-                marcarMapa();
-            }
-            actualitzarUbicacioActual();
-            
+            marcarMapa();
+            actualitzarUbicacioActual();    
         }, 1000);
     })
 } else {
