@@ -95,13 +95,14 @@ if(navigator.geolocation){
         ubicacioActual();
         centrarMapa();
         setInterval(() => {
+            latitudActual = position.coords.latitude;
+            longitudActual = position.coords.longitude;
+            centrarMapa();
             if(estat){
-                latitudActual = position.coords.latitude;
-                longitudActual = position.coords.longitude;
-                centrarMapa();
                 marcarMapa();
-                actualitzarUbicacioActual();
             }
+            actualitzarUbicacioActual();
+            
         }, 1000);
     })
 } else {
