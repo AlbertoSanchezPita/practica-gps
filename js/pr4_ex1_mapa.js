@@ -5,6 +5,8 @@ var estat = false;
 var llistaCoordenades = [];
 var pruebas = [[41.450219, 2.184702], [41.451439, 2.186297], [41.453248, 2.186754], [41.454661, 2.187715]]
 
+var contador=0;
+
 document.getElementsByClassName("iniciar")[0].addEventListener("click", iniciar);
 document.getElementsByClassName("acabar")[0].addEventListener("click", acabar);
 
@@ -35,7 +37,7 @@ function centrarMapa(){
 }
 
 function marcarMapa(){
-    llistaCoordenades.push([latitudActual, longitudActual]);
+    llistaCoordenades.push([latitudActual][longitudActual]);
     ruta = L.polyline(llistaCoordenades, linies);
     ruta.addTo(map);
 }
@@ -50,7 +52,7 @@ function ubicacioActual(){
 }
 
 function actualitzarUbicacioActual(){
-        ubiActual.setLatLng([latitudActual, longitudActual]).update();
+    ubiActual.setLatLng([latitudActual][longitudActual]).update();
 }
 
 
@@ -65,8 +67,23 @@ function acabar(){
     document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està PARADA";
 }
 
+function guardarDades(){
+    let dades = {
+        'id': rutes.length == 0 ? 1 : rutes[rutes.length-1]+1,
+        'nom': document.getElementById("nom").value,
+        'descripcio': document.getElementById("descripcio").value,
+        'activitat': document.getElementById("activitat").value,
+        'llistaCoordenades': []
+    }
+    rutes.push(dades);
+
+    localStorage.setItem("llistaRutes", JSON.stringify(rutes))
+}
+
 function recuperarDades(){
-   return localStorage.getItem("llistaRutes");
+    let recuperarRutes = localStorage.getItem("llistaRutes");
+    let llistaDades = JSON.parse(recuperarRutes);
+    console.log(llistaDades);
 }
 
 
@@ -79,10 +96,12 @@ if(navigator.geolocation){
         centrarMapa();
         setInterval(() => {
             if(estat){
+                latitudActual = position.coords.latitude;
+                longitudActual = position.coords.longitude;
                 centrarMapa();
                 marcarMapa();
                 actualitzarUbicacioActual();
-                }
+            }
         }, 1000);
     })
 } else {
@@ -90,7 +109,7 @@ if(navigator.geolocation){
 }
 
 
-L.polyline(pruebas, {color: 'red'}).addTo(map);
+// L.polyline(pruebas, {color: 'red'}).addTo(map);
 
 
-console.log(localStorage.getItem("llistaRutes"));
+//console.log(recuperarDades());
