@@ -1,13 +1,17 @@
 var latitudActual;
 var longitudActual;
 var ubiActual;
+estat = false;
 var llistaCoordenades = [];
 var rutes;
 var pruebas = [[41.450219, 2.184702], [41.451439, 2.186297], [41.453248, 2.186754], [41.454661, 2.187715]]
 
+var contador = 0;
 
-// document.getElementsByClassName("iniciar")[0].addEventListener("click", iniciar);
-// document.getElementsByClassName("acabar")[0].addEventListener("click", acabar);
+
+document.getElementsByClassName("iniciar")[0].addEventListener("click", iniciar);
+document.getElementsByClassName("acabar")[0].addEventListener("click", acabar);
+
 
 // Creo el mapa
 var map = L.map('map').setView([0, 0], 16);
@@ -37,6 +41,8 @@ function centrarMapa(){
 
 function marcarMapa(){
     llistaCoordenades.push([latitudActual][longitudActual]);
+    // llistaCoordenades.push(pruebas[contador]);
+    contador++
     ruta = L.polyline(llistaCoordenades, linies);
     ruta.addTo(map);
 }
@@ -51,20 +57,10 @@ function ubicacioActual(){
 }
 
 function actualitzarUbicacioActual(){
-    ubiActual.setLatLng([latitudActual][longitudActual]).update();
+    ubiActual.setLatLng([latitudActual][longitudActual]);
+    // ubiActual.setLatLng(pruebas[contador]);
 }
 
-
-// function iniciar(){
-//     estat = true;
-//     document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està ACTIVADA";
-
-// }
-
-// function acabar(){
-//     estat = false;
-//     document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està PARADA";
-// }
 
 function guardarDades(){
     let dades = {
@@ -86,6 +82,15 @@ function recuperarDades(){
 }
 
 
+function iniciar(){
+    document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està ACTIVADA";
+    estat = true;
+}
+
+function acabar(){
+    document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està PARADA";
+    estat = false;
+}
 
 if(navigator.geolocation){
     navigator.geolocation.getCurrentPosition((position) => {
@@ -94,11 +99,15 @@ if(navigator.geolocation){
         ubicacioActual();
         centrarMapa();
         setInterval(() => {
-            latitudActual = position.coords.latitude;
-            longitudActual = position.coords.longitude;
-            centrarMapa();
-            marcarMapa();
-            actualitzarUbicacioActual();    
+            if(latitudActual != position.coords.latitude || longitudActual != position.coords.longitude){
+                latitudActual = position.coords.latitude;
+                longitudActual = position.coords.longitude;
+                centrarMapa();
+                if(estat){
+                    marcarMapa();
+                }
+                actualitzarUbicacioActual();    
+            }
         }, 1000);
     })
 } else {
