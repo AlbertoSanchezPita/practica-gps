@@ -105,9 +105,9 @@ if(navigator.geolocation){
                 centrarMapa();
                 if(estat){
                     marcarMapa();
-                
+                }
                 actualitzarUbicacioActual();    
-            }
+            
         }, 1000);
     })
 } else {
