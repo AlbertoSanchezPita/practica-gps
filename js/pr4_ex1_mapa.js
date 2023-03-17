@@ -93,7 +93,7 @@ if(navigator.geolocation){
         ubicacioActual();
         centrarMapa();
         intervalID = setInterval(() => {
-            if(true){
+            
                 console.log(llistaCoordenades);
                 latitudActual = position.coords.latitude;
                 longitudActual = position.coords.longitude;
@@ -102,7 +102,7 @@ if(navigator.geolocation){
                     marcarMapa();
                 }
                 actualitzarUbicacioActual();    
-            } 
+            
         }, 1000);
     })
 } else {
