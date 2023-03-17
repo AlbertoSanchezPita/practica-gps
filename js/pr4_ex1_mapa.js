@@ -56,7 +56,7 @@ function ubicacioActual(){
 }
 
 function actualitzarUbicacioActual(){
-    ubiActual.setLatLng([latitudActual][longitudActual]);
+    ubiActual.setLatLng([latitudActual, longitudActual]);
     // ubiActual.setLatLng(pruebas[contador]);
 }
 
