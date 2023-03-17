@@ -40,9 +40,8 @@ function centrarMapa(){
 }
 
 function marcarMapa(){
-    llistaCoordenades.push([latitudActual][longitudActual]);
+    llistaCoordenades.push([latitudActual, longitudActual]);
     // llistaCoordenades.push(pruebas[contador]);
-    contador++
     ruta = L.polyline(llistaCoordenades, linies);
     ruta.addTo(map);
 }
@@ -99,7 +98,8 @@ if(navigator.geolocation){
         ubicacioActual();
         centrarMapa();
         setInterval(() => {
-            
+            if(true){
+                console.log(llistaCoordenades);
                 latitudActual = position.coords.latitude;
                 longitudActual = position.coords.longitude;
                 centrarMapa();
@@ -107,7 +107,7 @@ if(navigator.geolocation){
                     marcarMapa();
                 }
                 actualitzarUbicacioActual();    
-            
+            } 
         }, 1000);
     })
 } else {
