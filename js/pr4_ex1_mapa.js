@@ -98,7 +98,7 @@ if(navigator.geolocation){
         ubicacioActual();
         centrarMapa();
         setInterval(() => {
-            if(latitudActual != position.coords.latitude || longitudActual != position.coords.longitude){
+            if(true){
                 console.log(llistaCoordenades);
                 latitudActual = position.coords.latitude;
                 longitudActual = position.coords.longitude;
