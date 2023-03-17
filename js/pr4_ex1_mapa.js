@@ -61,23 +61,13 @@ function actualitzarUbicacioActual(){
 }
 
 
-function guardarDades(){
-    let dades = {
-        'id': rutes.length == 0 ? 1 : rutes[rutes.length-1]+1,
-        'nom': document.getElementById("nom").value,
-        'descripcio': document.getElementById("descripcio").value,
-        'activitat': document.getElementById("activitat").value,
-        'llistaCoordenades': []
-    }
-    rutes.push(dades);
-
-    localStorage.setItem("llistaRutes", JSON.stringify(rutes))
+function guardarDades(dades){
+    localStorage.setItem("llistaRutes", JSON.stringify(dades))
 }
 
 function recuperarDades(){
     let recuperarRutes = localStorage.getItem("llistaRutes");
-    rutes = JSON.parse(recuperarRutes);
-    console.log(rutes);
+    return JSON.parse(recuperarRutes);
 }
 
 
@@ -89,6 +79,11 @@ function iniciar(){
 function acabar(){
     document.getElementsByClassName("grabacio")[0].innerHTML = "La grabació del recorregut està PARADA";
     estat = false;
+    let rutes = recuperarDades();
+    console.log(rutes[rutes.length-1]);
+    rutes[rutes.length-1].llistaCoordenades = llistaCoordenades;
+    guardarDades(rutes);
+    clearInterval(intervalID);
 }
 
 if(navigator.geolocation){
@@ -97,7 +92,7 @@ if(navigator.geolocation){
         longitudActual = position.coords.longitude;
         ubicacioActual();
         centrarMapa();
-        setInterval(() => {
+        intervalID = setInterval(() => {
             if(true){
                 console.log(llistaCoordenades);
                 latitudActual = position.coords.latitude;
