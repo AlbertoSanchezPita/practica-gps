@@ -87,14 +87,13 @@ function acabar(){
 }
 
 if(navigator.geolocation){
-intervalID = setInterval(() => {
     navigator.geolocation.getCurrentPosition((position) => {
         latitudActual = position.coords.latitude;
         longitudActual = position.coords.longitude;
         ubicacioActual();
         centrarMapa();
-        
-            
+        intervalID = setInterval(() => {
+            if(true){
                 console.log(llistaCoordenades);
                 latitudActual = position.coords.latitude;
                 longitudActual = position.coords.longitude;
@@ -103,7 +102,7 @@ intervalID = setInterval(() => {
                     marcarMapa();
                 }
                 actualitzarUbicacioActual();    
-            
+            } 
         }, 1000);
     })
 } else {
